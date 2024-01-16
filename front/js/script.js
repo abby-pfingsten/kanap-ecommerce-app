@@ -20,6 +20,21 @@ function insertProdOnPage(sections) {
         const section = sections[i];
         console.log(section);
 
+        const newSection = document.createElement('section');
+
+        newSection.classList.add('items');
+        newSection.innerHTML = `
+        <a href="./product.html?id=${section._id}"
+            <article>
+                <img src=${section.imgUrl} alt=${section.altTxt}>
+                <h3 class=productName>${section.name}</h3>
+                <p class= productDescription>${section.description}</p>
+            </article>
+        </a>
+        `;
+
+        sectionHolder.appendChild(newSection);
+
     }
 
 }
