@@ -1,4 +1,5 @@
 console.log("helloworld");
+/* Inserting Data Into index.html */
 
 // grab the data from the backend
 fetch("http://localhost:3000/api/products")
