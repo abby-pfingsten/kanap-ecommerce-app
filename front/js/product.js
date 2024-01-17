@@ -1,7 +1,18 @@
-/* Mileston 4: Connecting Product Page to Home Tab */
-
-// TODO:
-// Create a loop to go through each of the products
-// For each product, grab the url ID
+// grab the current url
 const url = new URL(document.URL);
-console.log(url);
+
+// grab the ID of the url
+const urlId = url.searchParams.get("id");
+console.log(urlId);
+// create a new request
+let apiRequest = new XMLHttpRequest();
+
+// fetch the data
+apiRequest.open("GET", "http://localhost:3000/api/products/" + urlId);
+apiRequest.send();
+
+// onreadystatechange function
+apiRequest.onreadystatechange = () => {
+  if (apiRequest.readyState === 4) {
+  }
+};
