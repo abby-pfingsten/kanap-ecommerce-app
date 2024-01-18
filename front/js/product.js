@@ -1,7 +1,7 @@
 /* Grab Elements from the Page */
-const productImage = document.getElementsByClassName("item__img");
-// console.log(productImage);
+const productImage = document.getElementsByClassName("item__img")[0];
 
+//   productImage.appendChild(imgSection);
 const productTitle = document.getElementById("title");
 // console.log(productTitle);
 
@@ -29,11 +29,10 @@ function insertProdOnPage(
   productPrice,
   dropdown
 ) {
-  //   for (let i in sections) {
   // productImage
   const imgSection = document.createElement("img");
-  imgSection.setAttribute("src", response.imageURl);
-  imgSection.setAttribute("src", response.altTxt);
+  imgSection.setAttribute("src", response.imageUrl);
+  imgSection.setAttribute("alt", response.altTxt);
   productImage.appendChild(imgSection);
 
   // productTitle
@@ -41,22 +40,6 @@ function insertProdOnPage(
 
   // productDescription
   productDescription.textContent = response.description;
-
-  //   // we are creating new a section
-  //   const newSection = document.createElement("a");
-
-  //   // set the attribute so that the href is unique to each prod
-  //   newSection.setAttribute("href", `./product.html?id=${section._id}`);
-  //   newSection.innerHTML = `
-  //             <article>
-  //                 <img src=${section.imageUrl} alt=${section.altTxt}>
-  //                 <h3 class="productName">${section.name}</h3>
-  //                 <p class="productDescription">${section.description}</p>
-  //             </article>
-  //         `;
-
-  //   sectionHolder.appendChild(newSection);
-  //   }
 }
 
 /* URL Content and API Call*/
@@ -66,7 +49,6 @@ const url = new URL(document.URL);
 
 // grab the ID of the url
 const urlId = url.searchParams.get("id");
-console.log(urlId);
 // create a new request
 let apiRequest = new XMLHttpRequest();
 
@@ -87,6 +69,7 @@ apiRequest.onreadystatechange = () => {
       productPrice,
       dropdown
     );
+
     //   call insert dom function
   }
 };
