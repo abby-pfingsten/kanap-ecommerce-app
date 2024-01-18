@@ -13,6 +13,8 @@ const productPrice = document.getElementById("price");
 
 const dropdown = document.getElementsByTagName("select");
 // console.log(dropdown);
+// dropdown.options[dropdown.selectedIndex].value;
+// console.log(dropdown);
 
 /* Insert Into Dom Func */
 
@@ -34,8 +36,8 @@ function insertProdOnPage(
   // productTitle
   productTitle.textContent = response.name;
 
-    // productPrice
-    productPrice.textContent = response.price;
+  // productPrice
+  productPrice.textContent = response.price;
 
   // productDescription
   productDescription.textContent = response.description;
