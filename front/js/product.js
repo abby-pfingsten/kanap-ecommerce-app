@@ -16,10 +16,6 @@ const dropdown = document.getElementsByTagName("select");
 
 /* Insert Into Dom Func */
 
-// create an array with all of the elements that
-// need to be edited with API data
-productPageDOMChanges = [productImage, productTitle, productPrice, dropdown];
-
 // create function to insert product into HTML
 function insertProdOnPage(
   response,
@@ -37,6 +33,9 @@ function insertProdOnPage(
 
   // productTitle
   productTitle.textContent = response.name;
+
+    // productPrice
+    productPrice.textContent = response.price;
 
   // productDescription
   productDescription.textContent = response.description;
