@@ -64,7 +64,7 @@ apiRequest.send();
 apiRequest.onreadystatechange = () => {
   if (apiRequest.readyState === 4) {
     const response = JSON.parse(apiRequest.response);
-    console.log(response);
+
     insertProdOnPage(
       response,
       productImage,
