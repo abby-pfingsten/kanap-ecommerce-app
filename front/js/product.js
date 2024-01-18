@@ -4,7 +4,7 @@ const productTitle = document.getElementById("title");
 const productDescription = document.getElementById("description");
 const productPrice = document.getElementById("price");
 const dropdown = document.getElementsByTagName("select")[0];
-// WHY DO I HAVE TO DO INDEX 0, WHY RETURN HTML COLLECTION
+const x = document.getElementsByClassName("item__img");
 
 /* Insert Into Dom Func */
 
@@ -32,12 +32,7 @@ function insertProdOnPage(
   // productDescription
   productDescription.textContent = response.description;
 
-  // product colors --dropdown
-  // WHY DOES THIS GIVE INDEX AND NOT COLOR
-  //   for (let color in response.colors) {
-  //     console.log(color);
-  //     }
-
+  // product colors--dropdown
   for (let i in response.colors) {
     const colorOption = document.createElement("option");
     colorOption.value = response.colors[i];
