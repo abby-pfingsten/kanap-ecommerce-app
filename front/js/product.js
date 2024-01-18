@@ -1,20 +1,10 @@
 /* Grab Elements from the Page */
 const productImage = document.getElementsByClassName("item__img")[0];
-
-//   productImage.appendChild(imgSection);
 const productTitle = document.getElementById("title");
-// console.log(productTitle);
-
 const productDescription = document.getElementById("description");
-// console.log(productPrice);
-
 const productPrice = document.getElementById("price");
-// console.log(productPrice);
-
-const dropdown = document.getElementsByTagName("select");
-// console.log(dropdown);
-// dropdown.options[dropdown.selectedIndex].value;
-// console.log(dropdown);
+const dropdown = document.getElementsByTagName("select")[0];
+// WHY DO I HAVE TO DO INDEX 0, WHY RETURN HTML COLLECTION
 
 /* Insert Into Dom Func */
 
@@ -41,6 +31,19 @@ function insertProdOnPage(
 
   // productDescription
   productDescription.textContent = response.description;
+
+  // product colors --dropdown
+  // WHY DOES THIS GIVE INDEX AND NOT COLOR
+  //   for (let color in response.colors) {
+  //     console.log(color);
+  //     }
+
+  for (let i in response.colors) {
+    const colorOption = document.createElement("option");
+    colorOption.value = response.colors[i];
+    colorOption.textContent = response.colors[i];
+    dropdown.appendChild(colorOption);
+  }
 }
 
 /* URL Content and API Call*/
@@ -70,7 +73,5 @@ apiRequest.onreadystatechange = () => {
       productPrice,
       dropdown
     );
-
-    //   call insert dom function
   }
 };
