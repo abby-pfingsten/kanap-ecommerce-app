@@ -75,15 +75,21 @@ apiRequest.onreadystatechange = () => {
 
 /* Add Products to Cart */
 
+// initialize empty array for items
 let cartArray = [];
+// initialize empty object to hold item info
+let cartItem = {};
 
+// makes it so that it doesn't reset when you
+// change to a new product
 if (JSON.parse(localStorage.getItem("cart"))) {
   cartArray = JSON.parse(localStorage.getItem("cart"));
 } else {
   cartArray = [];
 }
 
-let cartItem = {};
+// add item details to cart everytime the
+// add to cart button is pushed
 addToCart.addEventListener("click", ($event) => {
   console.log(cartArray);
   const isAlreadyInArray = cartArray.find(
@@ -91,22 +97,18 @@ addToCart.addEventListener("click", ($event) => {
   );
 
   if (isAlreadyInArray) {
-    console.log("in array");
     for (let item in cartArray) {
       if (
         cartArray[item].id === urlId &&
         cartArray[item].color === dropdown.value
       ) {
-        console.log("item id: ", cartArray[item].id);
-        console.log("url id: ", urlId);
-        console.log("item color: ", cartArray[item].color);
-        console.log("dropdown value: ", dropdown.value);
+        // change both number types to ints
+        cartArray[item].quantity = parseInt(cartArray[item].quantity);
 
-        cartArray[item].quantity += itemsInCart.value;
+        cartArray[item].quantity += parseInt(itemsInCart.value);
       }
     }
   } else {
-    console.log("not in array");
     // add the product details to the object
     cartItem = {
       id: urlId,
@@ -119,6 +121,4 @@ addToCart.addEventListener("click", ($event) => {
   }
 
   localStorage.setItem("cart", JSON.stringify(cartArray));
-
-  // console.log(JSON.parse(localStorage.getItem("cart")));
 });
