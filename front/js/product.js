@@ -74,21 +74,41 @@ apiRequest.onreadystatechange = () => {
 };
 
 /* Add Products to Cart */
+
 let cartArray = [];
-let cartObject = {};
+
+if (JSON.parse(localStorage.getItem("cart"))) {
+  cartArray = JSON.parse(localStorage.getItem("cart"));
+} else {
+  cartArray = [];
+}
+
+let cartItem = {};
 addToCart.addEventListener("click", ($event) => {
-  console.log(dropdown.value);
-  console.log(itemsInCart.value);
-
-  console.log(urlId);
-
-  cartObject = {
-    id: urlId,
-    quantity: itemsInCart.value,
-    color: dropdown.value,
-  };
-
-  cartArray.push(cartObject);
-
   console.log(cartArray);
+  const isAlreadyInArray = cartArray.find(
+    (item) => item.id === urlId && item.color === dropdown.value
+  );
+
+  if (isAlreadyInArray) {
+    for (let item in cartArray) {
+      if (item.id === urlId && item.color === dropdown.value) {
+        item.quantity += itemsInCart.value;
+      }
+    }
+  } else {
+    // add the product details to the object
+    cartItem = {
+      id: urlId,
+      quantity: itemsInCart.value,
+      color: dropdown.value,
+    };
+
+    // append the object to the array
+    cartArray.push(cartItem);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cartArray));
+
+  // console.log(JSON.parse(localStorage.getItem("cart")));
 });
