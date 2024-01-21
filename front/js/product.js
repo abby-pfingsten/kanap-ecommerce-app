@@ -3,8 +3,10 @@ const productImage = document.getElementsByClassName("item__img")[0];
 const productTitle = document.getElementById("title");
 const productDescription = document.getElementById("description");
 const productPrice = document.getElementById("price");
+
 const dropdown = document.getElementsByTagName("select")[0];
-const x = document.getElementsByClassName("item__img");
+const addToCart = document.getElementById("addToCart");
+const itemsInCart = document.getElementsByTagName("input")[0];
 
 /* Insert Into Dom Func */
 
@@ -41,7 +43,7 @@ function insertProdOnPage(
   }
 }
 
-/* URL Content and API Call*/
+/* URL Content and API Call */
 
 // grab the current url
 const url = new URL(document.URL);
@@ -70,3 +72,23 @@ apiRequest.onreadystatechange = () => {
     );
   }
 };
+
+/* Add Products to Cart */
+let cartArray = [];
+let cartObject = {};
+addToCart.addEventListener("click", ($event) => {
+  console.log(dropdown.value);
+  console.log(itemsInCart.value);
+
+  console.log(urlId);
+
+  cartObject = {
+    id: urlId,
+    quantity: itemsInCart.value,
+    color: dropdown.value,
+  };
+
+  cartArray.push(cartObject);
+
+  console.log(cartArray);
+});
