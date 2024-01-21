@@ -112,7 +112,7 @@ addToCart.addEventListener("click", ($event) => {
     // add the product details to the object
     cartItem = {
       id: urlId,
-      quantity: itemsInCart.value,
+      quantity: parseInt(itemsInCart.value),
       color: dropdown.value,
     };
 
