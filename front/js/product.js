@@ -91,12 +91,22 @@ addToCart.addEventListener("click", ($event) => {
   );
 
   if (isAlreadyInArray) {
+    console.log("in array");
     for (let item in cartArray) {
-      if (item.id === urlId && item.color === dropdown.value) {
-        item.quantity += itemsInCart.value;
+      if (
+        cartArray[item].id === urlId &&
+        cartArray[item].color === dropdown.value
+      ) {
+        console.log("item id: ", cartArray[item].id);
+        console.log("url id: ", urlId);
+        console.log("item color: ", cartArray[item].color);
+        console.log("dropdown value: ", dropdown.value);
+
+        cartArray[item].quantity += itemsInCart.value;
       }
     }
   } else {
+    console.log("not in array");
     // add the product details to the object
     cartItem = {
       id: urlId,
