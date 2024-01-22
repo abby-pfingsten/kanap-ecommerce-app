@@ -3,8 +3,10 @@ const productImage = document.getElementsByClassName("item__img")[0];
 const productTitle = document.getElementById("title");
 const productDescription = document.getElementById("description");
 const productPrice = document.getElementById("price");
+
 const dropdown = document.getElementsByTagName("select")[0];
-// WHY DO I HAVE TO DO INDEX 0, WHY RETURN HTML COLLECTION
+const addToCart = document.getElementById("addToCart");
+const itemsInCart = document.getElementsByTagName("input")[0];
 
 /* Insert Into Dom Func */
 
@@ -32,12 +34,7 @@ function insertProdOnPage(
   // productDescription
   productDescription.textContent = response.description;
 
-  // product colors --dropdown
-  // WHY DOES THIS GIVE INDEX AND NOT COLOR
-  //   for (let color in response.colors) {
-  //     console.log(color);
-  //     }
-
+  // product colors--dropdown
   for (let i in response.colors) {
     const colorOption = document.createElement("option");
     colorOption.value = response.colors[i];
@@ -46,7 +43,7 @@ function insertProdOnPage(
   }
 }
 
-/* URL Content and API Call*/
+/* URL Content and API Call */
 
 // grab the current url
 const url = new URL(document.URL);
@@ -75,3 +72,53 @@ apiRequest.onreadystatechange = () => {
     );
   }
 };
+
+/* Add Products to Cart */
+
+// initialize empty array for items
+let cartArray = [];
+// initialize empty object to hold item info
+let cartItem = {};
+
+// makes it so that it doesn't reset when you
+// change to a new product
+if (JSON.parse(localStorage.getItem("cart"))) {
+  cartArray = JSON.parse(localStorage.getItem("cart"));
+} else {
+  cartArray = [];
+}
+
+// add item details to cart everytime the
+// add to cart button is pushed
+addToCart.addEventListener("click", ($event) => {
+  console.log(cartArray);
+  const isAlreadyInArray = cartArray.find(
+    (item) => item.id === urlId && item.color === dropdown.value
+  );
+
+  if (isAlreadyInArray) {
+    for (let item in cartArray) {
+      if (
+        cartArray[item].id === urlId &&
+        cartArray[item].color === dropdown.value
+      ) {
+        // change both number types to ints
+        cartArray[item].quantity = parseInt(cartArray[item].quantity);
+
+        cartArray[item].quantity += parseInt(itemsInCart.value);
+      }
+    }
+  } else {
+    // add the product details to the object
+    cartItem = {
+      id: urlId,
+      quantity: parseInt(itemsInCart.value),
+      color: dropdown.value,
+    };
+
+    // append the object to the array
+    cartArray.push(cartItem);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cartArray));
+});

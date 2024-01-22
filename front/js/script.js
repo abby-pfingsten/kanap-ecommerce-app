@@ -27,7 +27,7 @@ function insertProdOnPage(sections) {
     newSection.setAttribute("href", `./product.html?id=${section._id}`);
     newSection.innerHTML = `
             <article>
-                <img src=${section.imageUrl} alt=${section.altTxt}>
+                <img src="${section.imageUrl}" alt="${section.altTxt}">
                 <h3 class="productName">${section.name}</h3>
                 <p class="productDescription">${section.description}</p>
             </article>
