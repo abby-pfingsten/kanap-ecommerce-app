@@ -7,20 +7,18 @@ fetch("http://localhost:3000/api/products")
     return data.json();
   })
   .then((sections) => {
-    const productLocation = sections.findIndex(
-      (item) => item._id === cartArray.id
-    );
+    insertItemsIntoCart(cartArray, sections);
   });
 
 function insertItemsIntoCart(cartArray, sections) {
-  // find the correct information from the sections
+  // find the correct index from the sections
   const productLocation = sections.findIndex(
-    (itemId) => itemId.id === cartArray.id
+    (item) => item._id === cartArray.id
   );
 
-  console.log(itemId);
+  console.log(productLocation);
 
-  // create the new article
+  /* Create New Article */
   const newArticle = document.createElement("article");
 
   // set the attributes
@@ -29,9 +27,28 @@ function insertItemsIntoCart(cartArray, sections) {
   // set the class
   newArticle.classList.add("cart__item");
 
-  // add the image div
+  /* Create Image Div */
   const imageDiv = document.createElement("div");
+  // add class
   imageDiv.classList.add("cart__item__img");
+
   const itemImage = document.createElement("img");
-  //   itemImage.setAttribute("src", cartArray.d);
+  itemImage.setAttribute("src", productLocation.imageUrl);
+  itemImage.setAttribute("alt", productLocation.altTxt);
+
+  /* Create Cart Item Content Div */
+  const cartItemContentDiv = document.createElement("div");
+  // Cart Item Content Description
+  const cartItemDescriptionDiv = document.createElement("div");
+  const cartItemDescriptionHeader = document.createElement("h2");
+  const cartItemDescriptionColor = document.createElement("p");
+  const cartItemDescriptionPrice = document.createElement("p");
+  // Cart Item Content Settings
+  const cartItemContentSettings = document.createElement("div");
+  const cartItemSettingsDiv = document.createElement("div");
+  const cartItemSettingsQuantity = document.createElement("p");
+  const cartItemSettingsInput = document.createElement("input");
+  // Cart Item Content Settings Delete
+  const cartItemSettingsDelete = document.createElement("div");
+  const cartItemSettingsDeleteText = document.createElement("p");
 }
