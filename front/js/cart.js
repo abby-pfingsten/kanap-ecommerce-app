@@ -1,21 +1,15 @@
 // grab cart array from local storage
 const cartArray = JSON.parse(localStorage.getItem("cart"))[1];
-console.log(cartArray);
-console.log(cartArray.id);
+
 // grab the data from the backend
 fetch("http://localhost:3000/api/products")
   .then((data) => {
     return data.json();
   })
   .then((sections) => {
-    console.log(sections);
-    const productLocation = sections.some(
-      (itemId) => itemId.id === cartArray._id
+    const productLocation = sections.findIndex(
+      (item) => item._id === cartArray.id
     );
-
-    console.log(productLocation);
-    // insertProdOnPage(sections);
-    // console.log(sections);
   });
 
 function insertItemsIntoCart(cartArray, sections) {
