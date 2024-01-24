@@ -1,5 +1,6 @@
 // grab cart array from local storage
 const cartArray = JSON.parse(localStorage.getItem("cart"));
+// get the section to insert the products into
 const sectionHolder = document.getElementById("cart__items");
 
 // grab the data from the backend
@@ -8,19 +9,19 @@ fetch("http://localhost:3000/api/products")
     return data.json();
   })
   .then((sections) => {
-    // console.log(cartArray[1].id);
     insertItemsIntoCart(cartArray, sections);
   });
 
+/* Function To Insert Products */
 function insertItemsIntoCart(cartArray, sections) {
   for (let i in cartArray) {
     // find the correct index from the sections
     const productLocation = sections.findIndex(
       (item) => item._id === cartArray[i].id
     );
-
+    // get the rest of the product info from API
     const productInformation = sections[productLocation];
-    /* Create New Article */
+    //   create new article section
     const newArticle = document.createElement("article");
 
     // set the attributes
@@ -52,7 +53,7 @@ function insertItemsIntoCart(cartArray, sections) {
                 </div>    
     
     `;
-
+    // append all the children to the section
     sectionHolder.appendChild(newArticle);
   }
 }
