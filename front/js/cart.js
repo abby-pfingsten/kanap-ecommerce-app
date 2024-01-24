@@ -60,30 +60,4 @@ function insertItemsIntoCart(cartArray, sections) {
     `;
 
   sectionHolder.appendChild(newArticle);
-
-  /* Create Image Div */
-  //   const imageDiv = document.createElement("div");
-  //   // add class
-  //   imageDiv.classList.add("cart__item__img");
-  //   // add image tage
-  //   const itemImage = document.createElement("img");
-  //   // set image attributes
-  //   itemImage.setAttribute("src", productLocation.imageUrl);
-  //   itemImage.setAttribute("alt", productLocation.altTxt);
-
-  //   /* Create Cart Item Content Div */
-  //   const cartItemContentDiv = document.createElement("div");
-  //   // Cart Item Content Description
-  //   const cartItemDescriptionDiv = document.createElement("div");
-  //   const cartItemDescriptionHeader = document.createElement("h2");
-  //   const cartItemDescriptionColor = document.createElement("p");
-  //   const cartItemDescriptionPrice = document.createElement("p");
-  //   // Cart Item Content Settings
-  //   const cartItemContentSettings = document.createElement("div");
-  //   const cartItemSettingsDiv = document.createElement("div");
-  //   const cartItemSettingsQuantity = document.createElement("p");
-  //   const cartItemSettingsInput = document.createElement("input");
-  //   // Cart Item Content Settings Delete
-  //   const cartItemSettingsDelete = document.createElement("div");
-  //   const cartItemSettingsDeleteText = document.createElement("p");
 }
