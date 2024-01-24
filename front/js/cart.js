@@ -2,6 +2,10 @@
 const cartArray = JSON.parse(localStorage.getItem("cart"));
 // get the section to insert the products into
 const sectionHolder = document.getElementById("cart__items");
+// get the total quanityt
+let totalQuantity = document.getElementById("totalQuantity");
+// get total price
+let totalPrice = document.getElementById("totalPrice");
 
 // grab the data from the backend
 fetch("http://localhost:3000/api/products")
@@ -57,3 +61,19 @@ function insertItemsIntoCart(cartArray, sections) {
     sectionHolder.appendChild(newArticle);
   }
 }
+
+console.log(cartArray);
+let numQuantity = 0;
+let numPrice = 0;
+/* Update the Total Quantity/Price */
+for (i in cartArray) {
+  numQuantity += cartArray[i].quantity;
+  console.log(numQuantity);
+}
+
+
+
+// console.log(totalQuantity);
+totalQuantity.textContent = numQuantity.toString();
+totalPrice.textContent = numPrice.toString();
+// totalQuantity.textContent =
