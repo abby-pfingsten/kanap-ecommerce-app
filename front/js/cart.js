@@ -68,5 +68,5 @@ function insertItemsIntoCart(cartArray, sections) {
   }
   /* Update the Total Quantity/Price */
   totalQuantity.textContent = numQuantity.toString();
-  totalPrice.textContent = numPrice.toString();
+  totalPrice.textContent = numPrice.toLocaleString("en-US");
 }
