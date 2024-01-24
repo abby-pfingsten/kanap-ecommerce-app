@@ -7,6 +7,9 @@ let totalQuantity = document.getElementById("totalQuantity");
 // get total price
 let totalPrice = document.getElementById("totalPrice");
 
+let numPrice = 0;
+let numQuantity = 0;
+
 // grab the data from the backend
 fetch("http://localhost:3000/api/products")
   .then((data) => {
@@ -59,21 +62,11 @@ function insertItemsIntoCart(cartArray, sections) {
     `;
     // append all the children to the section
     sectionHolder.appendChild(newArticle);
+
+    numQuantity += cartArray[i].quantity;
+    numPrice += productInformation.price * cartArray[i].quantity;
   }
+  /* Update the Total Quantity/Price */
+  totalQuantity.textContent = numQuantity.toString();
+  totalPrice.textContent = numPrice.toString();
 }
-
-console.log(cartArray);
-let numQuantity = 0;
-let numPrice = 0;
-/* Update the Total Quantity/Price */
-for (i in cartArray) {
-  numQuantity += cartArray[i].quantity;
-  console.log(numQuantity);
-}
-
-
-
-// console.log(totalQuantity);
-totalQuantity.textContent = numQuantity.toString();
-totalPrice.textContent = numPrice.toString();
-// totalQuantity.textContent =
