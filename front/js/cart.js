@@ -2,6 +2,8 @@
 const cartArray = JSON.parse(localStorage.getItem("cart"))[1];
 const sectionHolder = document.getElementById("cart__items");
 
+console.log(cartArray);
+
 // grab the data from the backend
 fetch("http://localhost:3000/api/products")
   .then((data) => {
@@ -21,9 +23,9 @@ function insertItemsIntoCart(cartArray, sections) {
     (item) => item._id === cartArray.id
   );
 
-  console.log(productLocation);
-
   const productInformation = sections[productLocation];
+  console.log(productInformation);
+  console.log(cartArray);
 
   /* Create New Article */
   const newArticle = document.createElement("article");
@@ -43,8 +45,8 @@ function insertItemsIntoCart(cartArray, sections) {
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
                     <h2>${productInformation.name}</h2>
-                    <p>${cartArray.id}</p>
-                    <p>€${productInformation.price}42.00</p>
+                    <p>${cartArray.color}</p>
+                    <p>€${productInformation.price}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
