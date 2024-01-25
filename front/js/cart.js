@@ -50,7 +50,7 @@ function insertItemsIntoCart(cartArray, sections) {
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                      <p>Quantity: ${cartArray[i].quantity}</p>
+                      <p>Quantity:</p>
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cartArray[i].quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
@@ -65,6 +65,20 @@ function insertItemsIntoCart(cartArray, sections) {
 
     numQuantity += cartArray[i].quantity;
     numPrice += productInformation.price * cartArray[i].quantity;
+
+    /* Modify Quantity in Cart */
+
+    deleteButton = newArticle.querySelector(".deleteItem");
+    deleteButton.addEventListener("click", ($event) => {
+      console.log("here");
+      console.log(deleteButton);
+    });
+
+    quantityButton = newArticle.querySelector(".itemQuantity");
+    quantityButton.addEventListener("change", ($event) => {
+      console.log("here");
+      console.log(quantityButton);
+    });
   }
   /* Update the Total Quantity/Price */
   totalQuantity.textContent = numQuantity.toString();
