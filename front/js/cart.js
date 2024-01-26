@@ -81,17 +81,23 @@ function insertItemsIntoCart(cartArray, sections) {
       const elementId = elementToRemove.getAttribute("data-id");
       const elementColor = elementToRemove.getAttribute("data-color");
 
-      console.log(elementId);
-      console.log(elementColor);
-      console.log(cartArray);
       // find the correct index from the cartArray
       const elementToDeleteLocation = cartArray.findIndex(
         (item) => item.id === elementId && item.color == elementColor
       );
 
-      console.log(cartArray.splice(elementToDeleteLocation, 1));
+      console.log(cartArray[elementToDeleteLocation].quantity);
+
+      // Adjust Quantity and Total Price Based On Deletes
+      numQuantity -= cartArray[elementToDeleteLocation].quantity;
+      totalQuantity.textContent = numQuantity.toString();
+
+      numPrice -=
+        productInformation.price * cartArray[elementToDeleteLocation].quantity;
+      totalPrice.textContent = numPrice.toLocaleString("en-US");
+
+      cartArray.splice(elementToDeleteLocation, 1);
       localStorage.setItem("cart", JSON.stringify(cartArray));
-      //   console.log(cartArray.splice(elementToDeleteLocation, 1));
     });
 
     quantityButton = newArticle.querySelector(".itemQuantity");
