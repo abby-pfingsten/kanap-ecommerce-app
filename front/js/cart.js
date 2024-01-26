@@ -68,14 +68,31 @@ function insertItemsIntoCart(cartArray, sections) {
 
     /* Modify Quantity in Cart */
 
+    //   grab delete button
     deleteButton = newArticle.querySelector(".deleteItem");
+    //   add event listener for delete
     deleteButton.addEventListener("click", ($event) => {
-      console.log("delete button");
+      // grab the closest article as element to remove
       elementToRemove = newArticle.closest("article");
+      // remove from parent (DOM Modification)
       sectionHolder.removeChild(elementToRemove);
-      //   console.log(elementToRemove);
-      //   console.log(newArticle);
-      //   console.log(deleteButton);
+
+      // grab defining characteristics of element (LocalStorage Mod)
+      const elementId = elementToRemove.getAttribute("data-id");
+      const elementColor = elementToRemove.getAttribute("data-color");
+
+      console.log(elementId);
+      console.log(elementColor);
+      console.log(cartArray);
+      // find the correct index from the cartArray
+      const elementToDeleteLocation = cartArray.findIndex(
+        (item) => item.id === elementId && item.color == elementColor
+      );
+
+      console.log(cartArray.splice(elementToDeleteLocation, 1));
+
+      //   console.log(cartArray.splice(elementToDeleteLocation, 1));
+      console.log(elementToDeleteLocation);
     });
 
     quantityButton = newArticle.querySelector(".itemQuantity");
