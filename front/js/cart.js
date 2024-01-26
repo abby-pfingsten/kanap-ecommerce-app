@@ -70,15 +70,26 @@ function insertItemsIntoCart(cartArray, sections) {
 
     deleteButton = newArticle.querySelector(".deleteItem");
     deleteButton.addEventListener("click", ($event) => {
-      console.log("here");
-      console.log(deleteButton);
+      console.log("delete button");
+      elementToRemove = newArticle.closest("article");
+      sectionHolder.removeChild(elementToRemove);
+      //   console.log(elementToRemove);
+      //   console.log(newArticle);
+      //   console.log(deleteButton);
     });
 
     quantityButton = newArticle.querySelector(".itemQuantity");
     quantityButton.addEventListener("change", ($event) => {
-      console.log("here");
-      console.log(quantityButton);
+      console.log("quantity button");
+      console.log($event.target.value);
+      //   console.log(quantityButton);
     });
+
+    //   get element.closest and log
+    //   when you delete a cart you have to delete from local storage
+    //    and dom
+    //   once you're done modifying have to setItem in local storage
+    //   add message once you add an item to cart
   }
   /* Update the Total Quantity/Price */
   totalQuantity.textContent = numQuantity.toString();
