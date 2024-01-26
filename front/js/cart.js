@@ -90,9 +90,8 @@ function insertItemsIntoCart(cartArray, sections) {
       );
 
       console.log(cartArray.splice(elementToDeleteLocation, 1));
-
+      localStorage.setItem("cart", JSON.stringify(cartArray));
       //   console.log(cartArray.splice(elementToDeleteLocation, 1));
-      console.log(elementToDeleteLocation);
     });
 
     quantityButton = newArticle.querySelector(".itemQuantity");
