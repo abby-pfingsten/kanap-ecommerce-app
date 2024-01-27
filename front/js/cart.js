@@ -120,20 +120,14 @@ function insertItemsIntoCart(cartArray, sections) {
 
         cartArray[elementToChangeQuantity].quantity = $event.target.value;
         localStorage.setItem("cart", JSON.stringify(cartArray));
-        console.log("cart", cartArray);
-
-        console.log(numQuantity);
-        console.log(cartArray[elementToChangeQuantity].quantity);
       } else {
-        console.log("before", numQuantity);
-        console.log("event", parseInt($event.target.value));
-        console.log("cart", cartArray[elementToChangeQuantity].quantity);
         numQuantity -=
-          parseInt($event.target.value) +
-          cartArray[elementToChangeQuantity].quantity;
-        console.log("after", numQuantity);
+          $event.target.value + cartArray[elementToChangeQuantity].quantity;
+
+        cartArray[elementToChangeQuantity].quantity = $event.target.value;
+        localStorage.setItem("cart", JSON.stringify(cartArray));
       }
-      cartArray[elementToChangeQuantity].quantity = $event.target.value;
+      //   cartArray[elementToChangeQuantity].quantity = $event.target.value;
     });
     //   add message once you add an item to cart
   }
