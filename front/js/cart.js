@@ -86,8 +86,6 @@ function insertItemsIntoCart(cartArray, sections) {
         (item) => item.id === elementId && item.color == elementColor
       );
 
-      console.log(cartArray[elementToDeleteLocation].quantity);
-
       // Adjust Quantity and Total Price Based On Deletes
       numQuantity -= cartArray[elementToDeleteLocation].quantity;
       totalQuantity.textContent = numQuantity.toString();
@@ -102,15 +100,41 @@ function insertItemsIntoCart(cartArray, sections) {
 
     quantityButton = newArticle.querySelector(".itemQuantity");
     quantityButton.addEventListener("change", ($event) => {
-      console.log("quantity button");
-      console.log($event.target.value);
-      //   console.log(quantityButton);
-    });
+      // grab the closest article as element to remove
+      elementToUpdateQuantity = newArticle.closest("article");
+      // grab defining characteristics of element (LocalStorage Mod)
+      const elementId = elementToUpdateQuantity.getAttribute("data-id");
+      const elementColor = elementToUpdateQuantity.getAttribute("data-color");
 
-    //   get element.closest and log
-    //   when you delete a cart you have to delete from local storage
-    //    and dom
-    //   once you're done modifying have to setItem in local storage
+      // find the correct index from the cartArray
+      const elementToChangeQuantity = cartArray.findIndex(
+        (item) => item.id === elementId && item.color == elementColor
+      );
+
+      //   console.log("og quan", cartArray[elementToChangeQuantity].quantity);
+      //   console.log("new quant", $event.target.value);
+
+      if (cartArray[elementToChangeQuantity].quantity <= $event.target.value) {
+        numQuantity +=
+          $event.target.value - cartArray[elementToChangeQuantity].quantity;
+
+        cartArray[elementToChangeQuantity].quantity = $event.target.value;
+        localStorage.setItem("cart", JSON.stringify(cartArray));
+        console.log("cart", cartArray);
+
+        console.log(numQuantity);
+        console.log(cartArray[elementToChangeQuantity].quantity);
+      } else {
+        console.log("before", numQuantity);
+        console.log("event", parseInt($event.target.value));
+        console.log("cart", cartArray[elementToChangeQuantity].quantity);
+        numQuantity -=
+          parseInt($event.target.value) +
+          cartArray[elementToChangeQuantity].quantity;
+        console.log("after", numQuantity);
+      }
+      cartArray[elementToChangeQuantity].quantity = $event.target.value;
+    });
     //   add message once you add an item to cart
   }
   /* Update the Total Quantity/Price */
