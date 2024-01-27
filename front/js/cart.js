@@ -116,12 +116,19 @@ function insertItemsIntoCart(cartArray, sections) {
       cartArray[elementToChangeQuantity].quantity = $event.target.value;
       localStorage.setItem("cart", JSON.stringify(cartArray));
 
+      console.log("cartarray", cartArray);
+      console.log("cart array element", cartArray[elementToChangeQuantity]);
+
+      x = 0;
+      for (let i in cartArray) {
+        x += parseInt(cartArray[i].quantity);
+        console.log(x);
+      }
       //   numQuantity = $event.target.value;
       //   totalQuantity.textContent = numQuantity.toString();
 
       //   numPrice -=
       //     productInformation.price * cartArray[elementToChangeQuantity].quantity;
-      console.log(productInformation.price);
       //   totalPrice.textContent = numPrice.toLocaleString("en-US");
 
       //   cartArray[elementToChangeQuantity].quantity = $event.target.value;
