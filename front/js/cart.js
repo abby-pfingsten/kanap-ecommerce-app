@@ -86,6 +86,8 @@ function insertItemsIntoCart(cartArray, sections) {
         (item) => item.id === elementId && item.color == elementColor
       );
 
+      // TODO : ADD IF ELSE FOR IF YOU DELETE AND IT IS THE LAST ITEM
+
       // Adjust Quantity and Total Price Based On Deletes
       numQuantity -= cartArray[elementToDeleteLocation].quantity;
       totalQuantity.textContent = numQuantity.toString();
@@ -111,22 +113,17 @@ function insertItemsIntoCart(cartArray, sections) {
         (item) => item.id === elementId && item.color == elementColor
       );
 
-      //   console.log("og quan", cartArray[elementToChangeQuantity].quantity);
-      //   console.log("new quant", $event.target.value);
+      cartArray[elementToChangeQuantity].quantity = $event.target.value;
+      localStorage.setItem("cart", JSON.stringify(cartArray));
 
-      if (cartArray[elementToChangeQuantity].quantity <= $event.target.value) {
-        numQuantity +=
-          $event.target.value - cartArray[elementToChangeQuantity].quantity;
+      numQuantity = $event.target.value;
+      totalQuantity.textContent = numQuantity.toString();
 
-        cartArray[elementToChangeQuantity].quantity = $event.target.value;
-        localStorage.setItem("cart", JSON.stringify(cartArray));
-      } else {
-        numQuantity -=
-          $event.target.value + cartArray[elementToChangeQuantity].quantity;
+      numPrice -=
+        productInformation.price * cartArray[elementToChangeQuantity].quantity;
+      console.log(productInformation.price);
+      totalPrice.textContent = numPrice.toLocaleString("en-US");
 
-        cartArray[elementToChangeQuantity].quantity = $event.target.value;
-        localStorage.setItem("cart", JSON.stringify(cartArray));
-      }
       //   cartArray[elementToChangeQuantity].quantity = $event.target.value;
     });
     //   add message once you add an item to cart
