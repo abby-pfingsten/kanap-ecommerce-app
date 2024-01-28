@@ -121,7 +121,7 @@ function editCart(cartArray, sections) {
 
       localStorage.setItem("cart", JSON.stringify(cartArray));
 
-      const newX = cartArray.filter((item) => {
+      const cartWithoutModifiedItem = cartArray.filter((item) => {
         return !(
           item.id === cartArray[elementToChangeQuantity].id &&
           item.color == cartArray[elementToChangeQuantity].color
@@ -129,14 +129,21 @@ function editCart(cartArray, sections) {
       });
 
       //   console.log("newx", newX);
-      x = 0;
-      for (let i in newX) {
-        x += parseInt(newX[i].quantity);
+      counterForSubsettedArray = 0;
+      for (let i in cartWithoutModifiedItem) {
+        counterForSubsettedArray += parseInt(
+          cartWithoutModifiedItem[i].quantity
+        );
         // console.log("this is x", x);
       }
 
-      let total = parseInt(x + parseInt($event.target.value));
-      console.log("total", total);
+      let totalWithModification = parseInt(
+        counterForSubsettedArray + parseInt($event.target.value)
+      );
+      console.log("total", totalWithModification);
+
+      numQuantity = parseInt(totalWithModification);
+      totalQuantity.textContent = numQuantity;
 
       //   console.log("this is event value", $event.target.value);
       //   numQuantity += x;
