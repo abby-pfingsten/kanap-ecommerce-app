@@ -115,12 +115,15 @@ function editCart(cartArray, sections) {
         (item) => item.id === elementId && item.color == elementColor
       );
 
+      // change the proper index to the value set from the UI
       cartArray[elementToChangeQuantity].quantity = parseInt(
         $event.target.value
       );
 
+      // push that to local storage
       localStorage.setItem("cart", JSON.stringify(cartArray));
 
+      // grab the OG cart array, minus the one that was modified
       const cartWithoutModifiedItem = cartArray.filter((item) => {
         return !(
           item.id === cartArray[elementToChangeQuantity].id &&
@@ -128,28 +131,22 @@ function editCart(cartArray, sections) {
         );
       });
 
-      //   console.log("newx", newX);
+      // add together the quantity of the products from the above array
       counterForSubsettedArray = 0;
       for (let i in cartWithoutModifiedItem) {
         counterForSubsettedArray += parseInt(
           cartWithoutModifiedItem[i].quantity
         );
-        // console.log("this is x", x);
       }
 
+      // get the total of the modified product and the total from above
       let totalWithModification = parseInt(
         counterForSubsettedArray + parseInt($event.target.value)
       );
-      console.log("total", totalWithModification);
 
+      //  update the total quantity on the UI
       numQuantity = parseInt(totalWithModification);
       totalQuantity.textContent = numQuantity;
-
-      //   console.log("this is event value", $event.target.value);
-      //   numQuantity += x;
-      //   console.log(numQuantity);
-      //   numQuantity = $event.target.value;
-      //   totalQuantity.textContent = numQuantity.toString();
 
       //   numPrice -=
       //     productInformation.price * cartArray[elementToChangeQuantity].quantity;
