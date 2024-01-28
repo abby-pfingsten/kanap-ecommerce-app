@@ -63,7 +63,7 @@ function editCart(cartArray, sections) {
     // append all the children to the section
     sectionHolder.appendChild(newArticle);
 
-    numQuantity += cartArray[i].quantity;
+    numQuantity += parseInt(cartArray[i].quantity);
     numPrice += productInformation.price * cartArray[i].quantity;
 
     /* Delete Item From Cart */
@@ -89,8 +89,8 @@ function editCart(cartArray, sections) {
       // TODO : ADD IF ELSE FOR IF YOU DELETE AND IT IS THE LAST ITEM
 
       // Adjust Quantity and Total Price Based On Deletes
-      numQuantity -= cartArray[elementToDeleteLocation].quantity;
-      totalQuantity.textContent = numQuantity.toString();
+      numQuantity -= parseInt(cartArray[elementToDeleteLocation].quantity);
+      totalQuantity.textContent = numQuantity;
 
       numPrice -=
         productInformation.price * cartArray[elementToDeleteLocation].quantity;
@@ -115,7 +115,10 @@ function editCart(cartArray, sections) {
         (item) => item.id === elementId && item.color == elementColor
       );
 
-      cartArray[elementToChangeQuantity].quantity = $event.target.value;
+      cartArray[elementToChangeQuantity].quantity = parseInt(
+        $event.target.value
+      );
+
       localStorage.setItem("cart", JSON.stringify(cartArray));
 
       const newX = cartArray.filter((item) => {
@@ -132,8 +135,8 @@ function editCart(cartArray, sections) {
         // console.log("this is x", x);
       }
 
-      let total = x + parseInt($event.target.value);
-      //   console.log("total", total);
+      let total = parseInt(x + parseInt($event.target.value));
+      console.log("total", total);
 
       //   console.log("this is event value", $event.target.value);
       //   numQuantity += x;
@@ -149,7 +152,8 @@ function editCart(cartArray, sections) {
     });
     //   add message once you add an item to cart
   }
-  /* Update the Total Quantity/Price */
-  totalQuantity.textContent = numQuantity.toString();
+
+  totalQuantity.textContent = numQuantity;
+  console.log("total", typeof totalQuantity, totalQuantity);
   totalPrice.textContent = numPrice.toLocaleString("en-US");
 }
