@@ -16,11 +16,11 @@ fetch("http://localhost:3000/api/products")
     return data.json();
   })
   .then((sections) => {
-    insertItemsIntoCart(cartArray, sections);
+    editCart(cartArray, sections);
   });
 
 /* Function To Insert Products */
-function insertItemsIntoCart(cartArray, sections) {
+function editCart(cartArray, sections) {
   for (let i in cartArray) {
     // find the correct index from the sections
     const productLocation = sections.findIndex(
@@ -66,7 +66,7 @@ function insertItemsIntoCart(cartArray, sections) {
     numQuantity += cartArray[i].quantity;
     numPrice += productInformation.price * cartArray[i].quantity;
 
-    /* Modify Quantity in Cart */
+    /* Delete Item From Cart */
 
     //   grab delete button
     deleteButton = newArticle.querySelector(".deleteItem");
@@ -100,6 +100,8 @@ function insertItemsIntoCart(cartArray, sections) {
       localStorage.setItem("cart", JSON.stringify(cartArray));
     });
 
+    /* Update Cart Quantity */
+
     quantityButton = newArticle.querySelector(".itemQuantity");
     quantityButton.addEventListener("change", ($event) => {
       // grab the closest article as element to remove
@@ -116,14 +118,26 @@ function insertItemsIntoCart(cartArray, sections) {
       cartArray[elementToChangeQuantity].quantity = $event.target.value;
       localStorage.setItem("cart", JSON.stringify(cartArray));
 
-      console.log("cartarray", cartArray);
-      console.log("cart array element", cartArray[elementToChangeQuantity]);
+      const newX = cartArray.filter((item) => {
+        return !(
+          item.id === cartArray[elementToChangeQuantity].id &&
+          item.color == cartArray[elementToChangeQuantity].color
+        );
+      });
 
+      //   console.log("newx", newX);
       x = 0;
-      for (let i in cartArray) {
-        x += parseInt(cartArray[i].quantity);
-        console.log(x);
+      for (let i in newX) {
+        x += parseInt(newX[i].quantity);
+        // console.log("this is x", x);
       }
+
+      let total = x + parseInt($event.target.value);
+      //   console.log("total", total);
+
+      //   console.log("this is event value", $event.target.value);
+      //   numQuantity += x;
+      //   console.log(numQuantity);
       //   numQuantity = $event.target.value;
       //   totalQuantity.textContent = numQuantity.toString();
 
