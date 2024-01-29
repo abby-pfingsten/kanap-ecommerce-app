@@ -118,6 +118,7 @@ addToCart.addEventListener("click", ($event) => {
 
     // append the object to the array
     cartArray.push(cartItem);
+    alert("Item Successfully Added!");
   }
 
   localStorage.setItem("cart", JSON.stringify(cartArray));

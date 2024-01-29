@@ -16,11 +16,11 @@ fetch("http://localhost:3000/api/products")
     return data.json();
   })
   .then((sections) => {
-    insertItemsIntoCart(cartArray, sections);
+    editCart(cartArray, sections);
   });
 
 /* Function To Insert Products */
-function insertItemsIntoCart(cartArray, sections) {
+function editCart(cartArray, sections) {
   for (let i in cartArray) {
     // find the correct index from the sections
     const productLocation = sections.findIndex(
@@ -50,7 +50,7 @@ function insertItemsIntoCart(cartArray, sections) {
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                      <p>Quantity: ${cartArray[i].quantity}</p>
+                      <p>Quantity:</p>
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cartArray[i].quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
@@ -63,10 +63,103 @@ function insertItemsIntoCart(cartArray, sections) {
     // append all the children to the section
     sectionHolder.appendChild(newArticle);
 
-    numQuantity += cartArray[i].quantity;
+    numQuantity += parseInt(cartArray[i].quantity);
     numPrice += productInformation.price * cartArray[i].quantity;
+
+    /* Delete Item From Cart */
+
+    //   grab delete button
+    deleteButton = newArticle.querySelector(".deleteItem");
+    //   add event listener for delete
+    deleteButton.addEventListener("click", ($event) => {
+      // grab the closest article as element to remove
+      elementToRemove = newArticle.closest("article");
+      // remove from parent (DOM Modification)
+      sectionHolder.removeChild(elementToRemove);
+
+      // grab defining characteristics of element (LocalStorage Mod)
+      const elementId = elementToRemove.getAttribute("data-id");
+      const elementColor = elementToRemove.getAttribute("data-color");
+
+      // find the correct index from the cartArray
+      const elementToDeleteLocation = cartArray.findIndex(
+        (item) => item.id === elementId && item.color == elementColor
+      );
+      // Adjust Quantity and Total Price Based On Deletes
+      numQuantity -= parseInt(cartArray[elementToDeleteLocation].quantity);
+      totalQuantity.textContent = numQuantity;
+
+      numPrice -=
+        productInformation.price * cartArray[elementToDeleteLocation].quantity;
+      totalPrice.textContent = numPrice.toLocaleString("en-US");
+
+      cartArray.splice(elementToDeleteLocation, 1);
+      localStorage.setItem("cart", JSON.stringify(cartArray));
+    });
+
+    /* Update Cart Quantity */
+
+    quantityButton = newArticle.querySelector(".itemQuantity");
+    quantityButton.addEventListener("change", ($event) => {
+      // grab the closest article as element to remove
+      elementToUpdateQuantity = newArticle.closest("article");
+      // grab defining characteristics of element (LocalStorage Mod)
+      const elementId = elementToUpdateQuantity.getAttribute("data-id");
+      const elementColor = elementToUpdateQuantity.getAttribute("data-color");
+
+      // find the correct index from the cartArray
+      const elementToChangeQuantity = cartArray.findIndex(
+        (item) => item.id === elementId && item.color == elementColor
+      );
+
+      // change the proper index to the value set from the UI
+      cartArray[elementToChangeQuantity].quantity = parseInt(
+        $event.target.value
+      );
+
+      // push that to local storage
+      localStorage.setItem("cart", JSON.stringify(cartArray));
+
+      // grab the OG cart array, minus the one that was modified
+      const cartWithoutModifiedItem = cartArray.filter((item) => {
+        return !(
+          item.id === cartArray[elementToChangeQuantity].id &&
+          item.color == cartArray[elementToChangeQuantity].color
+        );
+      });
+
+      // adjust the price down below
+      let indexOfSectionsArray = 0;
+      let modifiedPrice = 0;
+      for (let i in cartArray) {
+        let indexOfSectionsArray = sections.findIndex(
+          (item) => item._id === cartArray[i].id
+        );
+        modifiedPrice +=
+          cartArray[i].quantity * sections[indexOfSectionsArray].price;
+      }
+      numPrice = modifiedPrice;
+      totalPrice.textContent = numPrice.toLocaleString("en-US");
+
+      // add together the quantity of the products from the above array
+      let counterForSubsettedArray = 0;
+      let priceForSubsettedArray = 0;
+      for (let i in cartWithoutModifiedItem) {
+        counterForSubsettedArray += parseInt(
+          cartWithoutModifiedItem[i].quantity
+        );
+      }
+
+      // get the total of the modified product and the total from above
+      let totalWithModification = parseInt(
+        counterForSubsettedArray + parseInt($event.target.value)
+      );
+      //  update the total quantity on the UI
+      numQuantity = parseInt(totalWithModification);
+      totalQuantity.textContent = numQuantity;
+    });
   }
-  /* Update the Total Quantity/Price */
-  totalQuantity.textContent = numQuantity.toString();
+
+  totalQuantity.textContent = numQuantity;
   totalPrice.textContent = numPrice.toLocaleString("en-US");
 }
