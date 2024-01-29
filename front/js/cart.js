@@ -85,9 +85,6 @@ function editCart(cartArray, sections) {
       const elementToDeleteLocation = cartArray.findIndex(
         (item) => item.id === elementId && item.color == elementColor
       );
-
-      // TODO : ADD IF ELSE FOR IF YOU DELETE AND IT IS THE LAST ITEM
-
       // Adjust Quantity and Total Price Based On Deletes
       numQuantity -= parseInt(cartArray[elementToDeleteLocation].quantity);
       totalQuantity.textContent = numQuantity;
@@ -114,23 +111,6 @@ function editCart(cartArray, sections) {
       const elementToChangeQuantity = cartArray.findIndex(
         (item) => item.id === elementId && item.color == elementColor
       );
-
-      // console.log((numPrice -= cartArray[elementToChangeQuantity].quantity));
-
-      // console.log(cartArray[elementToChangeQuantity]);
-      // console.log(productInformation);
-      // console.log(cartArray[elementToChangeQuantity].quantity); // subtract this * price from productInfo price from numPrice
-      // console.log($event.target.value); // add this * price from productinfo to numprice
-
-      // console.log(numPrice);
-      // numPrice -=
-      //   cartArray[elementToChangeQuantity].quantity * productInformation.price;
-      // console.log(
-      //   cartArray[elementToChangeQuantity].quantity * productInformation.price
-      // );
-      // numPrice -= $event.target.value * productInformation.price;
-      // console.log($event.target.value * productInformation.price);
-      // totalPrice.textContent = numPrice.toLocaleString("en-US");
 
       // change the proper index to the value set from the UI
       cartArray[elementToChangeQuantity].quantity = parseInt(
@@ -174,25 +154,10 @@ function editCart(cartArray, sections) {
       let totalWithModification = parseInt(
         counterForSubsettedArray + parseInt($event.target.value)
       );
-
-      // console.log(numQuantity);
-      // console.log(totalWithModification);
-
       //  update the total quantity on the UI
       numQuantity = parseInt(totalWithModification);
       totalQuantity.textContent = numQuantity;
-
-      // console.log(productInformation);
-      // console.log(cartArray);
-      // console.log(sections);
-
-      //   numPrice -=
-      //     productInformation.price * cartArray[elementToChangeQuantity].quantity;
-      //   totalPrice.textContent = numPrice.toLocaleString("en-US");
-
-      //   cartArray[elementToChangeQuantity].quantity = $event.target.value;
     });
-    //   add message once you add an item to cart
   }
 
   totalQuantity.textContent = numQuantity;
