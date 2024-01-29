@@ -115,6 +115,23 @@ function editCart(cartArray, sections) {
         (item) => item.id === elementId && item.color == elementColor
       );
 
+      // console.log((numPrice -= cartArray[elementToChangeQuantity].quantity));
+
+      // console.log(cartArray[elementToChangeQuantity]);
+      // console.log(productInformation);
+      // console.log(cartArray[elementToChangeQuantity].quantity); // subtract this * price from productInfo price from numPrice
+      // console.log($event.target.value); // add this * price from productinfo to numprice
+
+      // console.log(numPrice);
+      // numPrice -=
+      //   cartArray[elementToChangeQuantity].quantity * productInformation.price;
+      // console.log(
+      //   cartArray[elementToChangeQuantity].quantity * productInformation.price
+      // );
+      // numPrice -= $event.target.value * productInformation.price;
+      // console.log($event.target.value * productInformation.price);
+      // totalPrice.textContent = numPrice.toLocaleString("en-US");
+
       // change the proper index to the value set from the UI
       cartArray[elementToChangeQuantity].quantity = parseInt(
         $event.target.value
@@ -131,8 +148,22 @@ function editCart(cartArray, sections) {
         );
       });
 
+      // adjust the price down below
+      let indexOfSectionsArray = 0;
+      let modifiedPrice = 0;
+      for (let i in cartArray) {
+        let indexOfSectionsArray = sections.findIndex(
+          (item) => item._id === cartArray[i].id
+        );
+        modifiedPrice +=
+          cartArray[i].quantity * sections[indexOfSectionsArray].price;
+      }
+      numPrice = modifiedPrice;
+      totalPrice.textContent = numPrice.toLocaleString("en-US");
+
       // add together the quantity of the products from the above array
-      counterForSubsettedArray = 0;
+      let counterForSubsettedArray = 0;
+      let priceForSubsettedArray = 0;
       for (let i in cartWithoutModifiedItem) {
         counterForSubsettedArray += parseInt(
           cartWithoutModifiedItem[i].quantity
@@ -144,9 +175,16 @@ function editCart(cartArray, sections) {
         counterForSubsettedArray + parseInt($event.target.value)
       );
 
+      // console.log(numQuantity);
+      // console.log(totalWithModification);
+
       //  update the total quantity on the UI
       numQuantity = parseInt(totalWithModification);
       totalQuantity.textContent = numQuantity;
+
+      // console.log(productInformation);
+      // console.log(cartArray);
+      // console.log(sections);
 
       //   numPrice -=
       //     productInformation.price * cartArray[elementToChangeQuantity].quantity;
@@ -158,6 +196,5 @@ function editCart(cartArray, sections) {
   }
 
   totalQuantity.textContent = numQuantity;
-  console.log("total", typeof totalQuantity, totalQuantity);
   totalPrice.textContent = numPrice.toLocaleString("en-US");
 }
