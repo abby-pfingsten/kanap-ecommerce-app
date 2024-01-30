@@ -163,3 +163,15 @@ function editCart(cartArray, sections) {
   totalQuantity.textContent = numQuantity;
   totalPrice.textContent = numPrice.toLocaleString("en-US");
 }
+
+/* Validate User Input */
+
+const firstNameError = document.getElementById("firstNameErrorMsg");
+const firstNameInput = document.querySelector("#firstName");
+console.log("error", firstNameError);
+console.log("name", firstNameInput);
+const lastNameError = document.getElementById("lastNameErrorMsg");
+console.log(lastNameError);
+const addressError = document.getElementById("addressErrorMsg");
+const cityError = document.getElementById("cityErrorMsg");
+const emailError = document.getElementById("emailErrorMsg");
