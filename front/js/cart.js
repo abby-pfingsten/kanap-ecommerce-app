@@ -212,10 +212,61 @@ const emailError = document.getElementById("emailErrorMsg");
 const emailInput = document.querySelector("#email");
 
 emailInput.addEventListener("blur", () => {
-  console.log(emailFormat.test(emailInput.value));
   if (emailFormat.test(emailInput.value)) {
     emailError.textContent = "";
   } else {
     emailError.textContent = "Invalid email";
   }
+});
+
+/* Send POST Request */
+const orderButton = document.getElementById("order");
+// make an event listener on the order button that does if/else
+//  and does not allow it to run unless the tests are all true
+
+let contactInfo = {};
+let cartIds = [];
+
+// function onlyUnique(value, index, array) {
+//   return array.indexOf(value) === index;
+// }
+
+orderButton.addEventListener("click", ($event) => {
+  // console.log(addressInput.value);
+  $event.preventDefault();
+
+  console.log("first", hasNumbers.test(firstNameInput.value));
+  console.log("last", hasNumbers.test(lastNameInput.value));
+  console.log("address", hasNumbers.test(addressInput.value));
+  console.log("city", hasNumbers.test(cityInput.value));
+  console.log("email", emailFormat.test(emailInput.value));
+
+  if (
+    !hasNumbers.test(firstNameInput.value) &
+    !hasNumbers.test(lastNameInput.value) &
+    !hasNumbers.test(addressInput.value) &
+    !hasNumbers.test(cityInput.value) &
+    emailFormat.test(emailInput.value)
+  ) {
+    contactInfo = {
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      address: addressInput.value,
+      city: cityInput.value,
+      email: emailInput.value,
+    };
+    console.log("if");
+    // console.log(cartArray);
+
+    for (let i in cartArray) {
+      cartIds[i] = cartArray[i].id;
+    }
+  } else {
+    console.log("here");
+  }
+
+  // cartIds.filter(onlyUnique);
+
+  // console.log(cartIds);
+  // console.log(contactInfo);
 });
