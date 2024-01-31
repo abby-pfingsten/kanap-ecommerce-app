@@ -232,14 +232,8 @@ let cartIds = [];
 // }
 
 orderButton.addEventListener("click", ($event) => {
-  // console.log(addressInput.value);
   $event.preventDefault();
 
-  console.log("first", hasNumbers.test(firstNameInput.value));
-  console.log("last", hasNumbers.test(lastNameInput.value));
-  console.log("address", hasNumbers.test(addressInput.value));
-  console.log("city", hasNumbers.test(cityInput.value));
-  console.log("email", emailFormat.test(emailInput.value));
 
   if (
     !hasNumbers.test(firstNameInput.value) &
