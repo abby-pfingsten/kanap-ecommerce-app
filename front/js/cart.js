@@ -167,24 +167,55 @@ function editCart(cartArray, sections) {
 /* Validate User Input */
 
 const hasNumbers = new RegExp("[0-9]");
+const emailFormat = new RegExp(
+  "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$"
+);
 
 const firstNameError = document.getElementById("firstNameErrorMsg");
 const firstNameInput = document.querySelector("#firstName");
 
-firstNameInput.addEventListener("change", () => {
+firstNameInput.addEventListener("blur", () => {
   if (hasNumbers.test(firstNameInput.value)) {
     firstNameError.textContent = "Invalid name input";
+  } else {
+    firstNameError.textContent = "";
   }
 });
 
 const lastNameError = document.getElementById("lastNameErrorMsg");
 const lastNameInput = document.querySelector("#lastName");
 
+lastNameInput.addEventListener("blur", () => {
+  if (hasNumbers.test(lastNameInput.value)) {
+    lastNameError.textContent = "Invalid name input";
+  } else {
+    lastNameError.textContent = "";
+  }
+});
+
 const addressError = document.getElementById("addressErrorMsg");
 const addressInput = document.querySelector("#address");
+// not sure what kind of error to put here
 
 const cityError = document.getElementById("cityErrorMsg");
 const cityInput = document.querySelector("#city");
 
+cityInput.addEventListener("blur", () => {
+  if (hasNumbers.test(cityInput.value)) {
+    cityError.textContent = "Invalid city";
+  } else {
+    cityError.textContent = "";
+  }
+});
+
 const emailError = document.getElementById("emailErrorMsg");
 const emailInput = document.querySelector("#email");
+
+emailInput.addEventListener("blur", () => {
+  console.log(emailFormat.test(emailInput.value));
+  if (emailFormat.test(emailInput.value)) {
+    emailError.textContent = "";
+  } else {
+    emailError.textContent = "Invalid email";
+  }
+});
