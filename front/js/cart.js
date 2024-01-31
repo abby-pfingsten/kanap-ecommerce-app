@@ -166,12 +166,25 @@ function editCart(cartArray, sections) {
 
 /* Validate User Input */
 
+const hasNumbers = new RegExp("[0-9]");
+
 const firstNameError = document.getElementById("firstNameErrorMsg");
 const firstNameInput = document.querySelector("#firstName");
-console.log("error", firstNameError);
-console.log("name", firstNameInput);
+
+firstNameInput.addEventListener("change", () => {
+  if (hasNumbers.test(firstNameInput.value)) {
+    firstNameError.textContent = "Invalid name input";
+  }
+});
+
 const lastNameError = document.getElementById("lastNameErrorMsg");
-console.log(lastNameError);
+const lastNameInput = document.querySelector("#lastName");
+
 const addressError = document.getElementById("addressErrorMsg");
+const addressInput = document.querySelector("#address");
+
 const cityError = document.getElementById("cityErrorMsg");
+const cityInput = document.querySelector("#city");
+
 const emailError = document.getElementById("emailErrorMsg");
+const emailInput = document.querySelector("#email");
