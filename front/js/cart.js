@@ -166,19 +166,20 @@ function editCart(cartArray, sections) {
 
 /* Validate User Input */
 
-const hasNumbers = new RegExp("[0-9]");
-const emailFormat = new RegExp(
-  "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$"
-);
+// TODO: use regex to catch for case that there is at least one character
+const hasLetters = new RegExp("^[A-Za-z\\s]+$");
+const emailFormat = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
 
 const firstNameError = document.getElementById("firstNameErrorMsg");
 const firstNameInput = document.querySelector("#firstName");
 
 firstNameInput.addEventListener("blur", () => {
-  if (hasNumbers.test(firstNameInput.value)) {
-    firstNameError.textContent = "Invalid name input";
-  } else {
+  console.log(hasLetters.test(firstNameInput.value));
+
+  if (hasLetters.test(firstNameInput.value)) {
     firstNameError.textContent = "";
+  } else {
+    firstNameError.textContent = "Invalid name input";
   }
 });
 
@@ -186,10 +187,10 @@ const lastNameError = document.getElementById("lastNameErrorMsg");
 const lastNameInput = document.querySelector("#lastName");
 
 lastNameInput.addEventListener("blur", () => {
-  if (hasNumbers.test(lastNameInput.value)) {
-    lastNameError.textContent = "Invalid name input";
-  } else {
+  if (hasLetters.test(lastNameInput.value)) {
     lastNameError.textContent = "";
+  } else {
+    lastNameError.textContent = "Invalid name input";
   }
 });
 
@@ -201,17 +202,17 @@ const cityError = document.getElementById("cityErrorMsg");
 const cityInput = document.querySelector("#city");
 
 cityInput.addEventListener("blur", () => {
-  if (hasNumbers.test(cityInput.value)) {
-    cityError.textContent = "Invalid city";
-  } else {
+  if (hasLetters.test(cityInput.value)) {
     cityError.textContent = "";
+  } else {
+    cityError.textContent = "Invalid city";
   }
 });
 
 const emailError = document.getElementById("emailErrorMsg");
 const emailInput = document.querySelector("#email");
 
-emailInput.addEventListener("blur", () => {
+emailInput.addEventListener("input", () => {
   if (emailFormat.test(emailInput.value)) {
     emailError.textContent = "";
   } else {
@@ -220,26 +221,17 @@ emailInput.addEventListener("blur", () => {
 });
 
 /* Send POST Request */
+
 const orderButton = document.getElementById("order");
-// make an event listener on the order button that does if/else
-//  and does not allow it to run unless the tests are all true
 
 let contactInfo = {};
-let cartIds = [];
-
-// function onlyUnique(value, index, array) {
-//   return array.indexOf(value) === index;
-// }
-
 orderButton.addEventListener("click", ($event) => {
   $event.preventDefault();
-
-
   if (
-    !hasNumbers.test(firstNameInput.value) &
-    !hasNumbers.test(lastNameInput.value) &
-    !hasNumbers.test(addressInput.value) &
-    !hasNumbers.test(cityInput.value) &
+    hasLetters.test(firstNameInput.value) &
+    hasLetters.test(lastNameInput.value) &
+    hasLetters.test(addressInput.value) &
+    hasLetters.test(cityInput.value) &
     emailFormat.test(emailInput.value)
   ) {
     contactInfo = {
@@ -250,13 +242,12 @@ orderButton.addEventListener("click", ($event) => {
       email: emailInput.value,
     };
     console.log("if");
-    // console.log(cartArray);
 
-    for (let i in cartArray) {
-      cartIds[i] = cartArray[i].id;
-    }
+    let products = cartArray.map((i) => i.id);
+
+    // grab unique product ID
+    products = [...new Set(products)];
   } else {
-    console.log("here");
   }
 
   // cartIds.filter(onlyUnique);
