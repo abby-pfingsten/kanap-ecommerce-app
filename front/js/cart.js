@@ -261,10 +261,12 @@ orderButton.addEventListener("click", ($event) => {
         if (!data.ok) {
           throw Error(data.status);
         }
+        console.log("data", data);
         return data.json();
       })
       .then((contactInfoForOrder) => {
-        console.log("POST request successful.");
+        let orderId = contactInfoForOrder.orderId;
+        window.location.href = `./confirmation.html?id=${orderId}`;
       });
 
     // reset everything to empty
