@@ -174,8 +174,6 @@ const firstNameError = document.getElementById("firstNameErrorMsg");
 const firstNameInput = document.querySelector("#firstName");
 
 firstNameInput.addEventListener("blur", () => {
-  console.log(hasLetters.test(firstNameInput.value));
-
   if (hasLetters.test(firstNameInput.value)) {
     firstNameError.textContent = "";
   } else {
@@ -259,7 +257,6 @@ orderButton.addEventListener("click", ($event) => {
 
     fetch("http://localhost:3000/api/products/order", options)
       .then((data) => {
-        console.log("data", data);
         if (!data.ok) {
           throw Error(data.status);
         }
