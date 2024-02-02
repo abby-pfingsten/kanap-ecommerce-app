@@ -163,3 +163,115 @@ function editCart(cartArray, sections) {
   totalQuantity.textContent = numQuantity;
   totalPrice.textContent = numPrice.toLocaleString("en-US");
 }
+
+/* Validate User Input */
+
+// TODO: use regex to catch for case that there is at least one character
+const hasLetters = new RegExp("^[A-Za-z\\s]+$");
+const emailFormat = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
+
+const firstNameError = document.getElementById("firstNameErrorMsg");
+const firstNameInput = document.querySelector("#firstName");
+
+firstNameInput.addEventListener("blur", () => {
+  if (hasLetters.test(firstNameInput.value)) {
+    firstNameError.textContent = "";
+  } else {
+    firstNameError.textContent = "Invalid name input";
+  }
+});
+
+const lastNameError = document.getElementById("lastNameErrorMsg");
+const lastNameInput = document.querySelector("#lastName");
+
+lastNameInput.addEventListener("blur", () => {
+  if (hasLetters.test(lastNameInput.value)) {
+    lastNameError.textContent = "";
+  } else {
+    lastNameError.textContent = "Invalid name input";
+  }
+});
+
+const addressError = document.getElementById("addressErrorMsg");
+const addressInput = document.querySelector("#address");
+
+const cityError = document.getElementById("cityErrorMsg");
+const cityInput = document.querySelector("#city");
+
+cityInput.addEventListener("blur", () => {
+  if (hasLetters.test(cityInput.value)) {
+    cityError.textContent = "";
+  } else {
+    cityError.textContent = "Invalid city";
+  }
+});
+
+const emailError = document.getElementById("emailErrorMsg");
+const emailInput = document.querySelector("#email");
+
+emailInput.addEventListener("input", () => {
+  if (emailFormat.test(emailInput.value)) {
+    emailError.textContent = "";
+  } else {
+    emailError.textContent = "Invalid email";
+  }
+});
+
+/* Send POST Request */
+
+const orderButton = document.getElementById("order");
+
+let contactInfo = {};
+orderButton.addEventListener("click", ($event) => {
+  $event.preventDefault();
+  if (
+    hasLetters.test(firstNameInput.value) &
+    hasLetters.test(lastNameInput.value) &
+    hasLetters.test(addressInput.value) &
+    hasLetters.test(cityInput.value) &
+    emailFormat.test(emailInput.value)
+  ) {
+    let products = cartArray.map((i) => i.id);
+
+    // grab unique product ID
+    products = [...new Set(products)];
+
+    // create the object to be passed to API
+    contactInfoForOrder = {
+      contact: {
+        firstName: firstNameInput.value,
+        lastName: lastNameInput.value,
+        address: addressInput.value,
+        city: cityInput.value,
+        email: emailInput.value,
+      },
+      products: products,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contactInfoForOrder),
+    };
+    // make the POST request
+    fetch("http://localhost:3000/api/products/order", options)
+      .then((data) => {
+        if (!data.ok) {
+          throw Error(data.status);
+        }
+        return data.json();
+      })
+      .then((contactInfoForOrder) => {
+        console.log("POST request successful.");
+      });
+
+    // reset everything to empty
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+    addressInput.value = "";
+    cityInput.value = "";
+    emailInput.value = "";
+  }
+});
