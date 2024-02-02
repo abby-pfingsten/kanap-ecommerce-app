@@ -236,6 +236,7 @@ orderButton.addEventListener("click", ($event) => {
     // grab unique product ID
     products = [...new Set(products)];
 
+    // create the object to be passed to API
     contactInfoForOrder = {
       contact: {
         firstName: firstNameInput.value,
@@ -254,7 +255,7 @@ orderButton.addEventListener("click", ($event) => {
       },
       body: JSON.stringify(contactInfoForOrder),
     };
-
+    // make the POST request
     fetch("http://localhost:3000/api/products/order", options)
       .then((data) => {
         if (!data.ok) {
@@ -262,6 +263,15 @@ orderButton.addEventListener("click", ($event) => {
         }
         return data.json();
       })
-      .then((contactInfoForOrder) => {});
+      .then((contactInfoForOrder) => {
+        console.log("POST request successful.");
+      });
+
+    // reset everything to empty
+    firstNameInput.value = "";
+    lastNameInput.value = "";
+    addressInput.value = "";
+    cityInput.value = "";
+    emailInput.value = "";
   }
 });
