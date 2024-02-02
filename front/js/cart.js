@@ -196,7 +196,6 @@ lastNameInput.addEventListener("blur", () => {
 
 const addressError = document.getElementById("addressErrorMsg");
 const addressInput = document.querySelector("#address");
-// not sure what kind of error to put here
 
 const cityError = document.getElementById("cityErrorMsg");
 const cityInput = document.querySelector("#city");
@@ -222,6 +221,59 @@ emailInput.addEventListener("input", () => {
 
 /* Send POST Request */
 
+// function to request the data
+// function makeRequest(data) {
+//   return new Promise((resolve, reject) => {
+//     let request = new XMLHttpRequest();
+
+//     request.open("POST", "http://localhost:3000/api/products/order/");
+
+//     request.onreadystatechange = () => {
+//       if (request.readyState === 4) {
+//         if (request.status === 201) {
+//           resolve(JSON.parse(request.response));
+//         } else {
+//           reject(JSON.parse(request.response));
+//         }
+//       }
+//     };
+//     request.setRequestHeader("Content-Type", "application/json");
+//     request.send(JSON.stringify(data));
+//   });
+// }
+
+// async function submitOrderInfo(post) {
+//   try {
+//     const requestPromise = makeRequest(post);
+//     const response = await requestPromise;
+
+//     console.log(response);
+//   } catch (error) {
+//     console.log("error");
+//   }
+// }
+
+// const options = {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(contactInfoForOrder),
+// };
+
+// fetch("http://localhost:3000/api/products/order/", options)
+//   .then((data) => {
+//     if (!data.ok) {
+//       throw Error(data.status);
+//     }
+//     return data.json();
+//   })
+//   .then((contactInfoForOrder) => {
+//     // console.log(contactInfoForOrder);
+//     // contactInfoForOrder;
+//     // console.log(contactInfoForOrder);
+//   });
+
 const orderButton = document.getElementById("order");
 
 let contactInfo = {};
@@ -234,20 +286,46 @@ orderButton.addEventListener("click", ($event) => {
     hasLetters.test(cityInput.value) &
     emailFormat.test(emailInput.value)
   ) {
-    contactInfo = {
-      firstName: firstNameInput.value,
-      lastName: lastNameInput.value,
-      address: addressInput.value,
-      city: cityInput.value,
-      email: emailInput.value,
-    };
-    console.log("if");
-
     let products = cartArray.map((i) => i.id);
 
     // grab unique product ID
     products = [...new Set(products)];
-  } else {
+
+    contactInfoForOrder = {
+      contact: {
+        firstName: firstNameInput.value,
+        lastName: lastNameInput.value,
+        address: addressInput.value,
+        city: cityInput.value,
+        email: emailInput.value,
+      },
+      product_id: [products],
+    };
+
+    // submitOrderInfo(contactInfoForOrder);
+    console.log("if");
+    console.log(contactInfoForOrder);
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contactInfoForOrder)
+    };
+
+    fetch("http://localhost:3000/api/products/order/", options)
+      .then((data) => {
+        if (!data.ok) {
+          throw Error(data.status);
+        }
+        return data.json();
+      })
+      .then((contactInfoForOrder) => {
+        console.log(contactInfoForOrder);
+        // contactInfoForOrder;
+        // console.log(contactInfoForOrder);
+      });
   }
 
   // cartIds.filter(onlyUnique);
