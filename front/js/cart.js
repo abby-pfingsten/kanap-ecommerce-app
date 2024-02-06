@@ -7,6 +7,7 @@ let totalQuantity = document.getElementById("totalQuantity");
 // get total price
 let totalPrice = document.getElementById("totalPrice");
 
+// initialize empty price and quantity
 let numPrice = 0;
 let numQuantity = 0;
 
@@ -63,6 +64,7 @@ function editCart(cartArray, sections) {
     // append all the children to the section
     sectionHolder.appendChild(newArticle);
 
+    // update the price and quantity
     numQuantity += parseInt(cartArray[i].quantity);
     numPrice += productInformation.price * cartArray[i].quantity;
 
@@ -100,9 +102,11 @@ function editCart(cartArray, sections) {
     /* Update Cart Quantity */
 
     quantityButton = newArticle.querySelector(".itemQuantity");
+
     quantityButton.addEventListener("change", ($event) => {
       // grab the closest article as element to remove
       elementToUpdateQuantity = newArticle.closest("article");
+
       // grab defining characteristics of element (LocalStorage Mod)
       const elementId = elementToUpdateQuantity.getAttribute("data-id");
       const elementColor = elementToUpdateQuantity.getAttribute("data-color");
@@ -165,8 +169,6 @@ function editCart(cartArray, sections) {
 }
 
 /* Validate User Input */
-
-// TODO: use regex to catch for case that there is at least one character
 const hasLetters = new RegExp("^[A-Za-z\\s]+$");
 const emailFormat = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
 

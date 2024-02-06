@@ -1,20 +1,16 @@
-console.log("helloworld");
-/* Inserting Data Into index.html */
-
-// grab the data from the backend
+// grab the data from the backend via promise
 fetch("http://localhost:3000/api/products")
   .then((data) => {
     return data.json();
   })
   .then((sections) => {
     insertProdOnPage(sections);
-    // console.log(sections);
   });
 
 // get existing element from page
 const sectionHolder = document.querySelector("section");
-// console.log(sectionHolder);
 
+/* Inserting Data Into index.html */
 // create function to insert product into HTML
 function insertProdOnPage(sections) {
   for (let i in sections) {

@@ -91,11 +91,13 @@ if (JSON.parse(localStorage.getItem("cart"))) {
 // add item details to cart everytime the
 // add to cart button is pushed
 addToCart.addEventListener("click", ($event) => {
-  console.log(cartArray);
   const isAlreadyInArray = cartArray.find(
     (item) => item.id === urlId && item.color === dropdown.value
   );
 
+  // if the item ID and color are already in the array
+  // we just want to modify the quantity and not add
+  // something new
   if (isAlreadyInArray) {
     for (let item in cartArray) {
       if (
