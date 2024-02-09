@@ -9,7 +9,6 @@ const addToCart = document.getElementById("addToCart");
 const itemsInCart = document.getElementsByTagName("input")[0];
 
 /* Insert Into Dom Func */
-
 // create function to insert product into HTML
 function insertProdOnPage(
   response,
@@ -120,8 +119,9 @@ addToCart.addEventListener("click", ($event) => {
 
     // append the object to the array
     cartArray.push(cartItem);
-    alert("Item Successfully Added!");
   }
+  // give alert to user
+  alert("Item Successfully Added!");
 
   localStorage.setItem("cart", JSON.stringify(cartArray));
 });

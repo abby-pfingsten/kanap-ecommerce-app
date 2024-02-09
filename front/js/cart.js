@@ -20,7 +20,9 @@ fetch("http://localhost:3000/api/products")
     editCart(cartArray, sections);
   });
 
-/* Function To Insert Products */
+/* Function To Insert Products To Cart 
+as well as Update or Delete the Quantity */
+
 function editCart(cartArray, sections) {
   for (let i in cartArray) {
     // find the correct index from the sections
