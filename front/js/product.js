@@ -9,7 +9,6 @@ const addToCart = document.getElementById("addToCart");
 const itemsInCart = document.getElementsByTagName("input")[0];
 
 /* Insert Into Dom Func */
-
 // create function to insert product into HTML
 function insertProdOnPage(
   response,
@@ -91,11 +90,13 @@ if (JSON.parse(localStorage.getItem("cart"))) {
 // add item details to cart everytime the
 // add to cart button is pushed
 addToCart.addEventListener("click", ($event) => {
-  console.log(cartArray);
   const isAlreadyInArray = cartArray.find(
     (item) => item.id === urlId && item.color === dropdown.value
   );
 
+  // if the item ID and color are already in the array
+  // we just want to modify the quantity and not add
+  // something new
   if (isAlreadyInArray) {
     for (let item in cartArray) {
       if (
@@ -118,8 +119,9 @@ addToCart.addEventListener("click", ($event) => {
 
     // append the object to the array
     cartArray.push(cartItem);
-    alert("Item Successfully Added!");
   }
+  // give alert to user
+  alert("Item Successfully Added!");
 
   localStorage.setItem("cart", JSON.stringify(cartArray));
 });
